@@ -18,7 +18,7 @@
  * @param nbPlaces 
  * @param occupants 
  */
-Vehicule::Vehicule(int vitesseMax = 0, int nbPlaces = 1, int occupants = 0)
+Vehicule::Vehicule(int vitesseMax, int nbPlaces, int occupants)
 {
     this->vitesseMax_ = vitesseMax;
     this->nbPlaces_ = nbPlaces;
@@ -163,9 +163,19 @@ void Vehicule::mettreEnPanne(double random) {
  * @return string 
  */
 string Vehicule::getEtat() const {
-    return to_string(this->etat_);
+    switch(this->etat_) {
+        case ARRET:
+            return "Arrêt";
+        case MARCHE:
+            return "Marche";
+        case PANNE_LEGERE:
+            return "Panne légère";
+        case PANNE_SEVERE:
+            return "Panne sévère";
+        default:
+            return "Etat inconnu";
+    }
 }
-
 /**
  * @brief Destroy the Vehicule:: Vehicule object
  * 
@@ -192,6 +202,6 @@ ostream& operator<<(ostream& s,Vehicule const& v) {
     s << "Vitesse max : " << v.vitesseMax_ << endl;
     s << "Nombre de places : " << v.nbPlaces_ << endl;
     s << "Nombre d'occupants : " << v.occupants_ << endl;
-    s << "Etat : " << v.etat_ << endl;
+    s << "Etat : " << v.getEtat() << endl;
     return s;
 }
