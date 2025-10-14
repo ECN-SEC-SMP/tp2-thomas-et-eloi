@@ -41,6 +41,8 @@ public:
 
     virtual void accelerer(int increment);
 
+    virtual void freiner(int decrement);
+
     virtual void monter(int nbOcc);
 
     virtual void descendre(int nbOcc);

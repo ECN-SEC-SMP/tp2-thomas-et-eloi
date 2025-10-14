@@ -95,6 +95,29 @@ void Vehicule::accelerer(int increment) {
     this->vitesse_ += increment;
 }
 
+/**
+ * @brief 
+ * 
+ * @param decrement 
+ */
+void Vehicule::freiner(int decrement)
+{
+    if (this->etat_ != MARCHE)
+    {
+        throw new invalid_argument("Le vehicule n'est pas en marche !");
+    }
+    if (decrement < 0)
+    {
+        throw new invalid_argument("Le decrement doit être positif !");
+    }
+        this->accelerer(-decrement);
+}
+
+/**
+ * @brief 
+ * 
+ * @param nbOcc 
+ */
 void Vehicule::monter(int nbOcc) {
     if (nbOcc < 0) {
         throw new invalid_argument("Le nombre de personne qui montent ne peut pas être négatif");
@@ -105,6 +128,11 @@ void Vehicule::monter(int nbOcc) {
     this->occupants_ += nbOcc;
 }
 
+/**
+ * @brief 
+ * 
+ * @param nbOcc 
+ */
 void Vehicule::descendre(int nbOcc) {
     if (nbOcc < 0) {
         throw new invalid_argument("Le nombre de personne qui descendent ne peut pas être négatif");
@@ -115,6 +143,11 @@ void Vehicule::descendre(int nbOcc) {
     this->occupants_ -= nbOcc;
 }
 
+/**
+ * @brief 
+ * 
+ * @param random 
+ */
 void Vehicule::mettreEnPanne(double random) {
     if(random<0.5) {
         this->etat_ = PANNE_LEGERE;
@@ -124,10 +157,19 @@ void Vehicule::mettreEnPanne(double random) {
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @return string 
+ */
 string Vehicule::getEtat() const {
     return to_string(this->etat_);
 }
 
+/**
+ * @brief Destroy the Vehicule:: Vehicule object
+ * 
+ */
 Vehicule::~Vehicule() {
     //dtor
     this->vitesse_ = 0;
@@ -137,6 +179,13 @@ Vehicule::~Vehicule() {
     this->etat_ = 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param s 
+ * @param v 
+ * @return ostream& 
+ */
 ostream& operator<<(ostream& s,Vehicule const& v) {
     s << "Fiche technique de " << &v << " :" << endl;
     s << "Vitesse : " << v.vitesse_ << endl;
