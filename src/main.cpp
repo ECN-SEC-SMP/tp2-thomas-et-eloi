@@ -9,6 +9,8 @@
  * 
  */
 
+#include "Vehicule.hpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
