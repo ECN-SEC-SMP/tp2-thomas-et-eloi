@@ -30,7 +30,7 @@ Vehicule::Vehicule(int vitesseMax = 0, int nbPlaces = 1, int occupants = 0)
  * @brief 
  * 
  */
-Vehicule::demarrer()
+void Vehicule::demarrer()
 {
     if (this->etat_ == MARCHE)
     {
@@ -50,7 +50,7 @@ Vehicule::demarrer()
  * @brief 
  * 
  */
-Vehicule::arreter()
+void Vehicule::arreter()
 {
     if (this->vitesse_ != 0)
     {
@@ -66,18 +66,83 @@ Vehicule::arreter()
  * @brief 
  * 
  */
-Vehicule::depanner()
+void Vehicule::depanner()
 {
-    if (this->etats_ == MARCHE)
+    if (this->etat_ == MARCHE)
     {
         throw new invalid_argument("Le vehicule doit être à l'arrêt pour le dépannage !");
     }
-    else if (this->etats_ == ARRET)
+    else if (this->etat_ == ARRET)
     {
         throw new invalid_argument("Le vehicule n'est pas en panne !");
     }
     else if ((this->etat_ == PANNE_LEGERE) || (this->etat_ == PANNE_SEVERE))
     {
-        this->etats_ = ARRET;
+        this->etat_ = ARRET;
     }
+}
+
+void Vehicule::accelerer(int increment) {
+    if(this->etat_ != MARCHE) {
+        throw new invalid_argument("Impossible d'accélérer !");
+    }
+    if((this->vitesse_ + increment) < 0) {
+        throw new invalid_argument("Valeur négative");
+    }
+    if((this->vitesse_ + increment) > this->vitesseMax_) {
+        throw new invalid_argument("Valeur trop élevée");
+    }
+    this->vitesse_ += increment;
+}
+
+void Vehicule::monter(int nbOcc) {
+    if (nbOcc < 0) {
+        throw new invalid_argument("Le nombre de personne qui montent ne peut pas être négatif");
+    }
+    if(nbOcc + this->occupants_ > this->nbPlaces_){
+        throw new invalid_argument("Le nombre de place dans la voiture est insuffisant !");
+    }
+    this->occupants_ += nbOcc;
+}
+
+void Vehicule::descendre(int nbOcc) {
+    if (nbOcc < 0) {
+        throw new invalid_argument("Le nombre de personne qui descendent ne peut pas être négatif");
+    }
+    if(this->occupants_ - nbOcc < 0){
+        throw new invalid_argument("Trop de personnes, descendent ! Le nombre de personne dans la voiture ne peut pas être négatif");
+    }
+    this->occupants_ -= nbOcc;
+}
+
+void Vehicule::mettreEnPanne(double random) {
+    if(random<0.5) {
+        this->etat_ = PANNE_LEGERE;
+    }
+    else {
+        this->etat_ = PANNE_SEVERE;
+    }
+}
+
+string Vehicule::getEtat() const {
+    return to_string(this->etat_);
+}
+
+Vehicule::~Vehicule() {
+    //dtor
+    this->vitesse_ = 0;
+    this->vitesseMax_ = 0;
+    this->nbPlaces_ = 0;
+    this->occupants_ = 0;
+    this->etat_ = 0;
+}
+
+ostream& operator<<(ostream& s,Vehicule const& v) {
+    s << "Fiche technique de " << &v << " :" << endl;
+    s << "Vitesse : " << v.vitesse_ << endl;
+    s << "Vitesse max : " << v.vitesseMax_ << endl;
+    s << "Nombre de places : " << v.nbPlaces_ << endl;
+    s << "Nombre d'occupants : " << v.occupants_ << endl;
+    s << "Etat : " << v.etat_ << endl;
+    return s;
 }
