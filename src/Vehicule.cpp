@@ -20,6 +20,15 @@
  */
 Vehicule::Vehicule(int vitesseMax, int nbPlaces, int occupants)
 {
+    if (nbPlaces < 1)
+    {
+        throw new invalid_argument("Le véhicule ne peut pas avoir moins d'une place.");
+    }
+    if (occupants > nbPlaces)
+    {
+        throw new invalid_argument("Le nombre d'occupant doit être égal ou inférieur au nombre de places");
+    }
+
     this->vitesse_ = 0;
     this->vitesseMax_ = vitesseMax;
     this->nbPlaces_ = nbPlaces;
@@ -88,9 +97,9 @@ void Vehicule::depanner()
 }
 
 /**
- * @brief 
- * 
- * @param increment 
+ * @brief
+ *
+ * @param increment
  */
 void Vehicule::accelerer(int increment)
 {
@@ -173,7 +182,7 @@ void Vehicule::descendre(int nbOcc)
     {
         throw new runtime_error("Le vehicule doit être à l'arrêt pour que des personnes montent !");
     }
-    
+
     if (nbOcc < 0)
     {
         throw new invalid_argument("Le nombre de personne qui descendent ne peut pas être négatif");

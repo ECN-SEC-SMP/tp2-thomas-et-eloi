@@ -10,6 +10,7 @@
  */
 
 #include "Vehicule.hpp"
+#include "Voiture.hpp"
 
 #include <iostream>
 #include <string>
@@ -18,70 +19,108 @@
 
 using namespace std;
 
-void testDemarrer();
-void testArreter();
-void testDepanner();
-void testAccelerer();
-void testFreiner();
-void testMonter();
-void testDescendre();
-void testMettreEnPanne();
+void testVehiculeConstruct();
+void testVehiculeDemarrer();
+void testVehiculeArreter();
+void testVehiculeDepanner();
+void testVehiculeAccelerer();
+void testVehiculeFreiner();
+void testVehiculeMonter();
+void testVehiculeDescendre();
+void testVehiculeMettreEnPanne();
 
 void testVehicule();
+void testVoiture();
 
-void testDemarrer()
+void testVehiculeConstruct()
+{
+    cout << "=== Test du constructeur de Vehicule ===" << endl
+         << endl;
+
+    try
+    {
+        Vehicule vehiculeTest(120, 0, 0);
+        cout << "Véhicule crée (pas sensé arriver)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur constructeur : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Vehicule vehiculeTest(120, 5, 6);
+        cout << "Véhicule crée (pas sensé arriver)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur constructeur : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Vehicule vehiculeTest(120, 5, 2);
+        cout << "Véhicule créé sans pb." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur constrcuteur : " << e->what() << '\n';
+    }
+}
+
+void testVehiculeDemarrer()
 {
     cout << "=== Test de la méthode demarrer() ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
-    
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+
     try
     {
-        voitureTest.demarrer();
+        vehiculeTest.demarrer();
         cout << "Véhicule démarré avec succès." << endl;
     }
-    catch(runtime_error *e)
+    catch (runtime_error *e)
     {
         cerr << "Erreur lors du démarrage : " << e->what() << '\n';
     }
 
     try
     {
-        voitureTest.demarrer();
+        vehiculeTest.demarrer();
         cout << "Véhicule démarré avec succès." << endl;
     }
-    catch(runtime_error *e)
+    catch (runtime_error *e)
     {
         cerr << "Erreur lors du démarrage : " << e->what() << '\n';
     }
 
-    voitureTest.mettreEnPanne(0.3); // Met en panne légère
+    vehiculeTest.mettreEnPanne(0.3); // Met en panne légère
 
     try
     {
-        voitureTest.demarrer();
+        vehiculeTest.demarrer();
         cout << "Véhicule démarré avec succès." << endl;
     }
-    catch(runtime_error *e)
+    catch (runtime_error *e)
     {
         cerr << "Erreur lors du démarrage : " << e->what() << '\n';
     }
 }
 
-void testArreter()
+void testVehiculeArreter()
 {
     cout << "=== Test de la méthode arreter() ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
-    voitureTest.demarrer();
-    voitureTest.accelerer(50); // Accélération normale
+    vehiculeTest.demarrer();
+    vehiculeTest.accelerer(50); // Accélération normale
 
     try
     {
-        voitureTest.arreter();
+        vehiculeTest.arreter();
         cout << "Véhicule arrêté avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -89,11 +128,11 @@ void testArreter()
         cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
     }
 
-    voitureTest.freiner(50); // Freinage normal
+    vehiculeTest.freiner(50); // Freinage normal
 
     try
     {
-        voitureTest.arreter();
+        vehiculeTest.arreter();
         cout << "Véhicule arrêté avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -103,7 +142,7 @@ void testArreter()
 
     try
     {
-        voitureTest.arreter();
+        vehiculeTest.arreter();
         cout << "Véhicule arrêté avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -112,16 +151,16 @@ void testArreter()
     }
 }
 
-void testDepanner()
+void testVehiculeDepanner()
 {
     cout << "=== Test de la méthode depanner() ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     try
     {
-        voitureTest.depanner();
+        vehiculeTest.depanner();
         cout << "Véhicule dépanné avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -129,11 +168,11 @@ void testDepanner()
         cerr << "Erreur lors du dépannage : " << e->what() << '\n';
     }
 
-    voitureTest.demarrer();
+    vehiculeTest.demarrer();
 
     try
     {
-        voitureTest.depanner();
+        vehiculeTest.depanner();
         cout << "Véhicule dépanné avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -141,12 +180,12 @@ void testDepanner()
         cerr << "Erreur lors du dépannage : " << e->what() << '\n';
     }
 
-    voitureTest.arreter();
-    voitureTest.mettreEnPanne(0.3); // Met en panne légère
+    vehiculeTest.arreter();
+    vehiculeTest.mettreEnPanne(0.3); // Met en panne légère
 
     try
     {
-        voitureTest.depanner();
+        vehiculeTest.depanner();
         cout << "Véhicule dépanné avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -155,16 +194,16 @@ void testDepanner()
     }
 }
 
-void testAccelerer()
+void testVehiculeAccelerer()
 {
     cout << "=== Test de la méthode accelerer() ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     try
     {
-        voitureTest.accelerer(10); // Tentative de vitesse à l'arret
+        vehiculeTest.accelerer(10); // Tentative de vitesse à l'arret
         cout << "Accélération réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (runtime_error *e)
@@ -173,11 +212,11 @@ void testAccelerer()
         delete e;
     }
 
-    voitureTest.demarrer();
+    vehiculeTest.demarrer();
 
     try
     {
-        voitureTest.accelerer(-10); // Tentative de vitesse négative
+        vehiculeTest.accelerer(-10); // Tentative de vitesse négative
         cout << "Accélération réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -188,7 +227,7 @@ void testAccelerer()
 
     try
     {
-        voitureTest.accelerer(150); // Dépasse la vitesse max de 120
+        vehiculeTest.accelerer(150); // Dépasse la vitesse max de 120
         cout << "Accélération réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -199,7 +238,7 @@ void testAccelerer()
 
     try
     {
-        voitureTest.accelerer(50); // Accélération normale
+        vehiculeTest.accelerer(50); // Accélération normale
         cout << "Accélération à 50 km/h réussie." << endl;
     }
     catch (invalid_argument *e)
@@ -209,16 +248,16 @@ void testAccelerer()
     }
 }
 
-void testFreiner()
+void testVehiculeFreiner()
 {
     cout << "=== Test de la méthode freiner() ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     try
     {
-        voitureTest.freiner(10); // Tentative de freinage à l'arret
+        vehiculeTest.freiner(10); // Tentative de freinage à l'arret
         cout << "Freinage réussi (ne devrait pas s'afficher)" << endl;
     }
     catch (runtime_error *e)
@@ -227,12 +266,12 @@ void testFreiner()
         delete e;
     }
 
-    voitureTest.demarrer();
-    voitureTest.accelerer(50); // Accélération normale
+    vehiculeTest.demarrer();
+    vehiculeTest.accelerer(50); // Accélération normale
 
     try
     {
-        voitureTest.freiner(-10); // Tentative de freinage négatif
+        vehiculeTest.freiner(-10); // Tentative de freinage négatif
         cout << "Freinage réussi (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -243,7 +282,7 @@ void testFreiner()
 
     try
     {
-        voitureTest.freiner(20); // Freinage normal
+        vehiculeTest.freiner(20); // Freinage normal
         cout << "Freinage de 20 km/h réussi." << endl;
     }
     catch (invalid_argument *e)
@@ -254,7 +293,7 @@ void testFreiner()
 
     try
     {
-        voitureTest.freiner(50); // Freinage excessif (30 - 50 = -20)
+        vehiculeTest.freiner(50); // Freinage excessif (30 - 50 = -20)
         cout << "Freinage réussi (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -264,16 +303,16 @@ void testFreiner()
     }
 }
 
-void testMonter()
+void testVehiculeMonter()
 {
     cout << "=== Test de la méthode monter(int nbOcc) ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     try
     {
-        voitureTest.monter(-1); // Tentative de monter un nombre négatif de personnes
+        vehiculeTest.monter(-1); // Tentative de monter un nombre négatif de personnes
         cout << "Montée réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -284,7 +323,7 @@ void testMonter()
 
     try
     {
-        voitureTest.monter(6); // Tente d'ajouter 6 personnes dans un véhicule de 5 places
+        vehiculeTest.monter(6); // Tente d'ajouter 6 personnes dans un véhicule de 5 places
         cout << "Montée réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -293,10 +332,10 @@ void testMonter()
         delete e;
     }
 
-    voitureTest.demarrer();
+    vehiculeTest.demarrer();
     try
     {
-        voitureTest.monter(2); // Tentative de monter des personnes alors que le véhicule est en marche
+        vehiculeTest.monter(2); // Tentative de monter des personnes alors que le véhicule est en marche
         cout << "Montée réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (runtime_error *e)
@@ -305,11 +344,11 @@ void testMonter()
         delete e;
     }
 
-    voitureTest.arreter();
+    vehiculeTest.arreter();
 
     try
     {
-        voitureTest.monter(3); // Ajoute 3 personnes
+        vehiculeTest.monter(3); // Ajoute 3 personnes
         cout << "Montées dans le véhicule réussies." << endl;
     }
     catch (invalid_argument *e)
@@ -319,16 +358,16 @@ void testMonter()
     }
 }
 
-void testDescendre()
+void testVehiculeDescendre()
 {
     cout << "=== Test de la méthode descendre(int nbOcc) ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     try
     {
-        voitureTest.descendre(-1); // Tentative de descendre un nombre négatif de personnes
+        vehiculeTest.descendre(-1); // Tentative de descendre un nombre négatif de personnes
         cout << "Descente réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -339,7 +378,7 @@ void testDescendre()
 
     try
     {
-        voitureTest.descendre(1); // Tente de faire descendre 1 personne alors qu'il n'y en a pas
+        vehiculeTest.descendre(1); // Tente de faire descendre 1 personne alors qu'il n'y en a pas
         cout << "Descente réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -348,11 +387,11 @@ void testDescendre()
         delete e;
     }
 
-    voitureTest.monter(3); // Ajoute 3 personnes
+    vehiculeTest.monter(3); // Ajoute 3 personnes
 
     try
     {
-        voitureTest.descendre(5); // Tente de faire descendre 5 personnes
+        vehiculeTest.descendre(5); // Tente de faire descendre 5 personnes
         cout << "Descente réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (invalid_argument *e)
@@ -361,11 +400,11 @@ void testDescendre()
         delete e;
     }
 
-    voitureTest.demarrer();
+    vehiculeTest.demarrer();
 
     try
     {
-        voitureTest.descendre(2); // Tentative de descendre des personnes alors que le véhicule est en marche
+        vehiculeTest.descendre(2); // Tentative de descendre des personnes alors que le véhicule est en marche
         cout << "Descente réussie (ne devrait pas s'afficher)" << endl;
     }
     catch (runtime_error *e)
@@ -374,11 +413,11 @@ void testDescendre()
         delete e;
     }
 
-    voitureTest.arreter();
+    vehiculeTest.arreter();
 
     try
     {
-        voitureTest.descendre(2); // Fait descendre 2 personnes
+        vehiculeTest.descendre(2); // Fait descendre 2 personnes
         cout << "Descente réussie." << endl;
     }
     catch (invalid_argument *e)
@@ -387,18 +426,18 @@ void testDescendre()
         delete e;
     }
 }
-void testMettreEnPanne()
+void testVehiculeMettreEnPanne()
 {
     cout << "=== Test de la méthode mettreEnPanne(double random) ===" << endl
          << endl;
 
-    Vehicule voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+    Vehicule vehiculeTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
-    voitureTest.demarrer();
+    vehiculeTest.demarrer();
 
     try
     {
-        voitureTest.mettreEnPanne(0.3); // Met en panne légère
+        vehiculeTest.mettreEnPanne(0.3); // Met en panne légère
         cout << "Véhicule mis en panne avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -408,7 +447,7 @@ void testMettreEnPanne()
 
     try
     {
-        voitureTest.mettreEnPanne(0.7); // Tentative de mettre en panne un véhicule déjà en panne
+        vehiculeTest.mettreEnPanne(0.7); // Tentative de mettre en panne un véhicule déjà en panne
         cout << "Véhicule mis en panne avec succès." << endl;
     }
     catch (runtime_error *e)
@@ -419,25 +458,41 @@ void testMettreEnPanne()
 
 void testVehicule()
 {
-    testDemarrer();
+    testVehiculeConstruct();
     cout << endl;
-    testArreter();
+    testVehiculeDemarrer();
     cout << endl;
-    testDepanner();
+    testVehiculeArreter();
     cout << endl;
-    testAccelerer();
+    testVehiculeDepanner();
     cout << endl;
-    testFreiner();
+    testVehiculeAccelerer();
     cout << endl;
-    testMonter();
+    testVehiculeFreiner();
     cout << endl;
-    testDescendre();
+    testVehiculeMonter();
     cout << endl;
-    testMettreEnPanne();
+    testVehiculeDescendre();
+    cout << endl;
+    testVehiculeMettreEnPanne();
+}
+
+void testVoiture()
+{
+    Voiture voitureTest(120, 5, 0);
+
+    voitureTest.demarrer();
+
+    voitureTest.accelerer(50);
+    voitureTest.accelerer(-50);
+
+    voitureTest.arreter();
+
+    // delete voitureTest;
 }
 
 int main()
 {
-    testVehicule();
+    // testVehicule();
     return 0;
 }
