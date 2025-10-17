@@ -1,7 +1,7 @@
 /**
  * @file Voiture.cpp
  * @author Eloi Tourangin (eloi.tourangin@eleves.ec-nantes.fr) & Thomas Verron (thomas.verron@eleves.ec-nantes.fr)
- * @brief
+ * @brief Implémentation de la classe Voiture
  * @version 0.1
  * @date 14-10-2025
  *
@@ -14,9 +14,9 @@
 /**
  * @brief Construct a new Voiture:: Voiture object
  * 
- * @param vitesseMax 
- * @param nbPlaces 
- * @param occupants 
+ * @param vitesseMax Vitesse maximale de la voiture
+ * @param nbPlaces Nombre de places (maximum 5)
+ * @param occupants Nombre d'occupants initiaux
  */
 Voiture::Voiture(int vitesseMax, int nbPlaces, int occupants) : Vehicule(vitesseMax, nbPlaces, occupants)
 {
@@ -47,8 +47,8 @@ void Voiture::demarrer()
 }
 
 /**
- * @brief
- *
+ * @brief Arrête la voiture
+ * La voiture doit être à vitesse nulle avant de pouvoir s'arrêter
  */
 void Voiture::arreter()
 {
@@ -66,6 +66,9 @@ void Voiture::arreter()
     cout << "La voiture s'est arrêté." << endl;
 }
 
+/**
+ * @brief Destroy the Voiture:: Voiture object
+ */
 Voiture::~Voiture()
 {
     // cout << "La voiture a été détruit." << endl;

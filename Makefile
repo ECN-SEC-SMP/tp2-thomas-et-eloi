@@ -6,11 +6,11 @@ ASSETSDIR := assets
 all: $(BUILDDIR)/main.out
 
 # Build the final executable
-$(BUILDDIR)/main.out: $(BUILDDIR)/main.o $(BUILDDIR)/Vehicule.o $(BUILDDIR)/Voiture.o $(BUILDDIR)/Bateau.o
+$(BUILDDIR)/main.out: $(BUILDDIR)/main.o $(BUILDDIR)/Vehicule.o $(BUILDDIR)/Voiture.o $(BUILDDIR)/Bateau.o $(BUILDDIR)/VoitureAmphibie.o
 	g++ -o $@ $^
 
 # Build main.o
-$(BUILDDIR)/main.o: $(SRCDIR)/main.cpp $(SRCDIR)/Vehicule.cpp $(INCDIR)/Vehicule.hpp $(SRCDIR)/Voiture.cpp $(INCDIR)/Voiture.hpp $(SRCDIR)/Bateau.cpp $(INCDIR)/Bateau.hpp | $(BUILDDIR)
+$(BUILDDIR)/main.o: $(SRCDIR)/main.cpp $(SRCDIR)/Vehicule.cpp $(INCDIR)/Vehicule.hpp $(SRCDIR)/Voiture.cpp $(INCDIR)/Voiture.hpp $(SRCDIR)/Bateau.cpp $(INCDIR)/Bateau.hpp $(SRCDIR)/VoitureAmphibie.cpp $(INCDIR)/VoitureAmphibie.hpp | $(BUILDDIR)
 	g++ -I$(INCDIR) -c $(SRCDIR)/main.cpp -o $(BUILDDIR)/main.o
 
 # Build Vehicule.o
@@ -24,6 +24,10 @@ $(BUILDDIR)/Voiture.o: $(SRCDIR)/Voiture.cpp $(INCDIR)/Voiture.hpp | $(BUILDDIR)
 # Build Bateau.o
 $(BUILDDIR)/Bateau.o: $(SRCDIR)/Bateau.cpp $(INCDIR)/Bateau.hpp | $(BUILDDIR)
 	g++ -I$(INCDIR) -c $(SRCDIR)/Bateau.cpp -o $(BUILDDIR)/Bateau.o
+
+# Build VoitureAmphibie.o
+$(BUILDDIR)/VoitureAmphibie.o: $(SRCDIR)/VoitureAmphibie.cpp $(INCDIR)/VoitureAmphibie.hpp $(INCDIR)/Voiture.hpp $(INCDIR)/Bateau.hpp | $(BUILDDIR)
+	g++ -I$(INCDIR) -c $(SRCDIR)/VoitureAmphibie.cpp -o $(BUILDDIR)/VoitureAmphibie.o
 
 # Create build directory
 $(BUILDDIR):

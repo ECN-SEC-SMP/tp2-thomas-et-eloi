@@ -1,7 +1,7 @@
 /**
  * @file Vehicule.cpp
  * @author Eloi Tourangin (eloi.tourangin@eleves.ec-nantes.fr) & Thomas Verron (thomas.verron@eleves.ec-nantes.fr)
- * @brief
+ * @brief Implémentation de la classe Vehicule
  * @version 0.1
  * @date 14-10-2025
  *
@@ -14,9 +14,9 @@
 /**
  * @brief Construct a new Vehicule:: Vehicule object
  *
- * @param vitesseMax
- * @param nbPlaces
- * @param occupants
+ * @param vitesseMax Vitesse maximale du véhicule
+ * @param nbPlaces Nombre de places dans le véhicule
+ * @param occupants Nombre d'occupants initiaux
  */
 Vehicule::Vehicule(int vitesseMax, int nbPlaces, int occupants)
 {
@@ -59,8 +59,8 @@ void Vehicule::demarrer()
 }
 
 /**
- * @brief
- *
+ * @brief Arrête le véhicule
+ * Le véhicule doit d'abord avoir une vitesse nulle avant de s'arrêter
  */
 void Vehicule::arreter()
 {
@@ -79,8 +79,8 @@ void Vehicule::arreter()
 }
 
 /**
- * @brief
- *
+ * @brief Dépanne le véhicule
+ * Remet le véhicule à l'état d'arrêt s'il était en panne
  */
 void Vehicule::depanner()
 {
@@ -97,9 +97,9 @@ void Vehicule::depanner()
 }
 
 /**
- * @brief
- *
- * @param increment
+ * @brief Accélère ou ralentit le véhicule
+ * 
+ * @param increment Valeur à ajouter à la vitesse actuelle (peut être négative pour ralentir)
  */
 void Vehicule::accelerer(int increment)
 {
@@ -126,9 +126,9 @@ void Vehicule::accelerer(int increment)
 }
 
 /**
- * @brief
- *
- * @param decrement
+ * @brief Freine le véhicule
+ * 
+ * @param decrement Valeur positive à retirer de la vitesse actuelle
  */
 void Vehicule::freiner(int decrement)
 {
@@ -146,9 +146,9 @@ void Vehicule::freiner(int decrement)
 }
 
 /**
- * @brief
- *
- * @param nbOcc
+ * @brief Fait monter des occupants dans le véhicule
+ * 
+ * @param nbOcc Nombre de personnes à faire monter
  */
 void Vehicule::monter(int nbOcc)
 {
@@ -172,9 +172,9 @@ void Vehicule::monter(int nbOcc)
 }
 
 /**
- * @brief
- *
- * @param nbOcc
+ * @brief Fait descendre des occupants du véhicule
+ * 
+ * @param nbOcc Nombre de personnes à faire descendre
  */
 void Vehicule::descendre(int nbOcc)
 {
@@ -198,9 +198,9 @@ void Vehicule::descendre(int nbOcc)
 }
 
 /**
- * @brief
- *
- * @param random
+ * @brief Met le véhicule en panne (légère ou sévère)
+ * 
+ * @param random Valeur aléatoire entre 0 et 1 pour déterminer le type de panne
  */
 void Vehicule::mettreEnPanne(double random)
 {
@@ -222,9 +222,9 @@ void Vehicule::mettreEnPanne(double random)
 }
 
 /**
- * @brief
- *
- * @return string
+ * @brief Retourne l'état actuel du véhicule sous forme de chaîne de caractères
+ * 
+ * @return string Représentation textuelle de l'état
  */
 string Vehicule::getEtat() const
 {
@@ -259,11 +259,12 @@ Vehicule::~Vehicule()
 }
 
 /**
- * @brief
- *
- * @param s
- * @param v
- * @return ostream&
+ * @brief Opérateur d'affichage pour un véhicule
+ * Affiche la fiche technique complète du véhicule
+ * 
+ * @param s Flux de sortie
+ * @param v Véhicule à afficher
+ * @return ostream& Référence vers le flux de sortie
  */
 ostream &operator<<(ostream &s, Vehicule const &v)
 {

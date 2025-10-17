@@ -1,7 +1,7 @@
 /**
  * @file Bateau.cpp
  * @author Eloi Tourangin (eloi.tourangin@eleves.ec-nantes.fr) & Thomas Verron (thomas.verron@eleves.ec-nantes.fr)
- * @brief 
+ * @brief Implémentation de la classe Bateau
  * @version 0.1
  * @date 14-10-2025
  * 
@@ -11,7 +11,13 @@
 
  #include "Bateau.hpp"
 
-
+/**
+ * @brief Construct a new Bateau:: Bateau object
+ * 
+ * @param vitesseMax Vitesse maximale du bateau (maximum 300)
+ * @param nbPlaces Nombre de places
+ * @param occupants Nombre d'occupants initiaux
+ */
 Bateau::Bateau(int vitesseMax, int nbPlaces, int occupants) : Vehicule(vitesseMax, nbPlaces, occupants)
 {
     if (vitesseMax > 300)
@@ -41,8 +47,8 @@ void Bateau::demarrer()
 }
 
 /**
- * @brief
- *
+ * @brief Arrête le bateau
+ * Le bateau doit être à vitesse nulle avant de pouvoir s'arrêter
  */
 void Bateau::arreter()
 {
@@ -60,6 +66,9 @@ void Bateau::arreter()
     cout << "Le bateau s'est arrêté." << endl;
 }
 
+/**
+ * @brief Destroy the Bateau:: Bateau object
+ */
 Bateau::~Bateau()
 {
     // cout << "Le Bateau a été détruit." << endl;

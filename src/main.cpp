@@ -12,6 +12,7 @@
 #include "Vehicule.hpp"
 #include "Voiture.hpp"
 #include "Bateau.hpp"
+#include "VoitureAmphibie.hpp"
 
 #include <iostream>
 #include <string>
@@ -43,6 +44,14 @@ void testBateauDemarrer();
 void testBateauArreter();
 
 void testBateau();
+
+void testVoitureAmphibieConstruct();
+void testVoitureAmphibieAfficherAttributs();
+void testVoitureAmphibieDemarrer();
+void testVoitureAmphibieArreter();
+void testVoitureAmphibieModesIndependants();
+
+void testVoitureAmphibie();
 
 void testVehiculeConstruct()
 {
@@ -745,10 +754,218 @@ void testBateau()
     testBateauArreter();
 }
 
+void testVoitureAmphibieConstruct()
+{
+    cout << "=== Test du constructeur de VoitureAmphibie ===" << endl
+         << endl;
+
+    try
+    {
+        VoitureAmphibie voitureAmphibieTest(150, 250, 6, 0);
+        cout << "Voiture amphibie 6 places créée (impossible - limite voiture)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        VoitureAmphibie voitureAmphibieTest(150, 350, 4, 0);
+        cout << "Voiture amphibie avec bateau trop rapide créée (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        VoitureAmphibie voitureAmphibieTest(150, 250, 3, 5);
+        cout << "Voiture amphibie avec + de personnes que de places créée (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        VoitureAmphibie voitureAmphibieTest(180, 80, 4, 2);
+        cout << "Voiture amphibie créée avec succès (180 km/h sur route, 80 km/h sur eau)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+}
+
+void testVoitureAmphibieAfficherAttributs()
+{
+    cout << "=== Test de la méthode afficherAttributs() ===" << endl
+         << endl;
+
+    VoitureAmphibie voitureAmphibieTest(200, 100, 4, 2);
+
+    cout << "Affichage des attributs juste après la création :" << endl;
+    voitureAmphibieTest.afficherAttributs();
+
+    cout << "\nDémarrage du mode voiture et accélération..." << endl;
+    voitureAmphibieTest.Voiture::demarrer();
+    voitureAmphibieTest.Voiture::accelerer(50);
+
+    cout << "Démarrage du mode bateau et accélération..." << endl;
+    voitureAmphibieTest.Bateau::demarrer();
+    voitureAmphibieTest.Bateau::accelerer(30);
+
+    cout << "\nAffichage des attributs après accélération des deux modes :" << endl;
+    voitureAmphibieTest.afficherAttributs();
+
+    cout << "On voit bien que la voiture amphibie possède 2 ensembles d'attributs différents !" << endl;
+}
+
+void testVoitureAmphibieDemarrer()
+{
+    cout << "=== Test de la méthode demarrer() ===" << endl
+         << endl;
+
+    VoitureAmphibie voitureAmphibieTest(200, 100, 4, 0);
+
+    try
+    {
+        voitureAmphibieTest.demarrer();
+        cout << "Voiture amphibie démarrée avec succès (démarre les 2 modes)." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    cout << endl;
+
+    try
+    {
+        voitureAmphibieTest.demarrer();
+        cout << "Tentative de redémarrer (devrait échouer car déjà en marche)." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    cout << endl;
+
+    voitureAmphibieTest.Voiture::mettreEnPanne(0.3);
+    cout << "Mode voiture mis en panne..." << endl;
+
+    try
+    {
+        voitureAmphibieTest.demarrer();
+        cout << "Tentative de démarrage avec un mode en panne." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+}
+
+void testVoitureAmphibieArreter()
+{
+    cout << "=== Test de la méthode arreter() ===" << endl
+         << endl;
+
+    VoitureAmphibie voitureAmphibieTest(200, 100, 4, 0);
+
+    voitureAmphibieTest.demarrer();
+    voitureAmphibieTest.Voiture::accelerer(80);
+    voitureAmphibieTest.Bateau::accelerer(50);
+
+    cout << "Voiture amphibie en mouvement (voiture: 80 km/h, bateau: 50 km/h)" << endl;
+
+    try
+    {
+        voitureAmphibieTest.arreter();
+        cout << "Tentative d'arrêt sans freiner (devrait échouer)." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+
+    cout << endl;
+
+    voitureAmphibieTest.Voiture::freiner(80);
+    voitureAmphibieTest.Bateau::freiner(50);
+
+    cout << "Après freinage complet des deux modes..." << endl;
+
+    try
+    {
+        voitureAmphibieTest.arreter();
+        cout << "Voiture amphibie arrêtée avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+
+    cout << endl;
+
+    try
+    {
+        voitureAmphibieTest.arreter();
+        cout << "Tentative d'arrêt alors qu'elle est déjà arrêtée." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+}
+
+void testVoitureAmphibieModesIndependants()
+{
+    cout << "=== Test de l'indépendance des modes Voiture et Bateau ===" << endl
+         << endl;
+
+    VoitureAmphibie voitureAmphibieTest(200, 100, 4, 2);
+
+    cout << "Démonstration que les deux modes sont indépendants :" << endl
+         << endl;
+
+    voitureAmphibieTest.Voiture::demarrer();
+    voitureAmphibieTest.Voiture::accelerer(120);
+
+    voitureAmphibieTest.Bateau::demarrer();
+    voitureAmphibieTest.Bateau::accelerer(60);
+
+    voitureAmphibieTest.afficherAttributs();
+
+    voitureAmphibieTest.Voiture::freiner(120);
+    voitureAmphibieTest.Voiture::arreter();
+
+    voitureAmphibieTest.Bateau::mettreEnPanne(0.7);
+
+    voitureAmphibieTest.afficherAttributs();
+}
+
+void testVoitureAmphibie()
+{
+    testVoitureAmphibieConstruct();
+    cout << endl;
+    testVoitureAmphibieAfficherAttributs();
+    cout << endl;
+    testVoitureAmphibieDemarrer();
+    cout << endl;
+    testVoitureAmphibieArreter();
+    cout << endl;
+    testVoitureAmphibieModesIndependants();
+}
+
 int main()
 {
     // testVehicule();
     // testVoiture();
-    testBateau();
+    // testBateau();
+    testVoitureAmphibie();
     return 0;
 }
