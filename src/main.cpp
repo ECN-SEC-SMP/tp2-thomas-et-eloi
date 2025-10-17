@@ -11,6 +11,7 @@
 
 #include "Vehicule.hpp"
 #include "Voiture.hpp"
+#include "Bateau.hpp"
 
 #include <iostream>
 #include <string>
@@ -30,7 +31,18 @@ void testVehiculeDescendre();
 void testVehiculeMettreEnPanne();
 
 void testVehicule();
+
+void testVoitureConstruct();
+void testVoitureDemarrer();
+void testVoitureArreter();
+
 void testVoiture();
+
+void testBateauConstruct();
+void testBateauDemarrer();
+void testBateauArreter();
+
+void testBateau();
 
 void testVehiculeConstruct()
 {
@@ -477,22 +489,266 @@ void testVehicule()
     testVehiculeMettreEnPanne();
 }
 
-void testVoiture()
+void testVoitureConstruct()
 {
-    Voiture voitureTest(120, 5, 0);
+    cout << "=== Test du constructeur de Voiture ===" << endl
+         << endl;
+
+    try
+    {
+        Voiture voitureTest(120, 6, 0);
+        cout << "Voiture 6 place créée (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Voiture voitureTest(120, 2, 4);
+        cout << "Voiture créée avec + de personne que de place (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Voiture voitureTest(120, 5, 4);
+        cout << "Voiture créée avec succès." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+}
+
+void testVoitureDemarrer()
+{
+    cout << "=== Test de la méthode demarrer() ===" << endl
+         << endl;
+
+    Voiture voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+
+    try
+    {
+        voitureTest.demarrer();
+        cout << "Voiture démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    try
+    {
+        voitureTest.demarrer();
+        cout << "Voiture démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    voitureTest.mettreEnPanne(0.3); // Met en panne légère
+
+    try
+    {
+        voitureTest.demarrer();
+        cout << "Voiture démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+}
+
+void testVoitureArreter()
+{
+    cout << "=== Test de la méthode arreter() ===" << endl
+         << endl;
+
+    Voiture voitureTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
 
     voitureTest.demarrer();
+    voitureTest.accelerer(50); // Accélération normale
 
-    voitureTest.accelerer(50);
-    voitureTest.accelerer(-50);
+    try
+    {
+        voitureTest.arreter();
+        cout << "Voiture arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
 
-    voitureTest.arreter();
+    voitureTest.freiner(50); // Freinage normal
 
-    // delete voitureTest;
+    try
+    {
+        voitureTest.arreter();
+        cout << "Voiture arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+
+    try
+    {
+        voitureTest.arreter();
+        cout << "Voiture arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+}
+
+void testVoiture()
+{
+    testVoitureConstruct();
+    cout << endl;
+    testVoitureDemarrer();
+    cout << endl;
+    testVoitureArreter();
+}
+
+void testBateauConstruct()
+{
+    cout << "=== Test du constructeur de Bateau ===" << endl
+         << endl;
+
+    try
+    {
+        Bateau bateauTest(350, 6, 0);
+        cout << "Bateau tro prapide créée (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Bateau bateauTest(120, 2, 4);
+        cout << "Bateau créée avec + de personne que de place (impossible)." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+
+    try
+    {
+        Bateau bateauTest(120, 5, 4);
+        cout << "Bateau créée avec succès." << endl;
+    }
+    catch (invalid_argument *e)
+    {
+        std::cerr << "Erreur lors de la création : " << e->what() << '\n';
+    }
+}
+
+void testBateauDemarrer()
+{
+    cout << "=== Test de la méthode demarrer() ===" << endl
+         << endl;
+
+    Bateau bateauTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+
+    try
+    {
+        bateauTest.demarrer();
+        cout << "Bateau démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    try
+    {
+        bateauTest.demarrer();
+        cout << "Bateau démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+
+    bateauTest.mettreEnPanne(0.3); // Met en panne légère
+
+    try
+    {
+        bateauTest.demarrer();
+        cout << "Bateau démarré avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors du démarrage : " << e->what() << '\n';
+    }
+}
+
+void testBateauArreter()
+{
+    cout << "=== Test de la méthode arreter() ===" << endl
+         << endl;
+
+    Bateau bateauTest(120, 5, 0); // vitesseMax=120, nbPlaces=5, occupants=0
+
+    bateauTest.demarrer();
+    bateauTest.accelerer(50); // Accélération normale
+
+    try
+    {
+        bateauTest.arreter();
+        cout << "Bateau arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+
+    bateauTest.freiner(50); // Freinage normal
+
+    try
+    {
+        bateauTest.arreter();
+        cout << "Bateau arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+
+    try
+    {
+        bateauTest.arreter();
+        cout << "Voiture arrêté avec succès." << endl;
+    }
+    catch (runtime_error *e)
+    {
+        cerr << "Erreur lors de l'arrêt : " << e->what() << '\n';
+    }
+}
+
+void testBateau()
+{
+    testBateauConstruct();
+    cout << endl;
+    testBateauDemarrer();
+    cout << endl;
+    testBateauArreter();
 }
 
 int main()
 {
     // testVehicule();
+    // testVoiture();
+    testBateau();
     return 0;
 }

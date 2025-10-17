@@ -18,28 +18,12 @@
  * @param nbPlaces 
  * @param occupants 
  */
-Voiture::Voiture(int vitesseMax, int nbPlaces, int occupants)
+Voiture::Voiture(int vitesseMax, int nbPlaces, int occupants) : Vehicule(vitesseMax, nbPlaces, occupants)
 {
     if (nbPlaces > 5)
     {
         throw new invalid_argument("Une voiture ne peut pas avoir plus de 5 places.");
     }
-    if (nbPlaces < 1)
-    {
-        throw new invalid_argument("Une voiture ne peut pas avoir moins d'une place.");
-    }
-    if (occupants > nbPlaces)
-    {
-        throw new invalid_argument("Le nombre d'occupant doit être égal ou inférieur au nombre de places");
-    }
-
-    this->vitesse_ = 0;
-    this->vitesseMax_ = vitesseMax;
-    this->nbPlaces_ = nbPlaces;
-    this->occupants_ = occupants;
-    this->etat_ = ARRET;
-
-    cout << "La voiture a été créée." << endl;
 }
 
 /**
@@ -84,12 +68,5 @@ void Voiture::arreter()
 
 Voiture::~Voiture()
 {
-    // // dtor
-    // this->vitesse_ = 0;
-    // this->vitesseMax_ = 0;
-    // this->nbPlaces_ = 0;
-    // this->occupants_ = 0;
-    // this->etat_ = 0;
-
-    cout << "La voiture a été détruit." << endl;
+    // cout << "La voiture a été détruit." << endl;
 }

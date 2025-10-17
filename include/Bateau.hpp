@@ -13,9 +13,14 @@
 
 #include "Vehicule.hpp"
 
-class Bateau : public Vehicule {
+class Bateau : public Vehicule
+{
 public:
+    Bateau(int vitesseMax = 0, int nbPlaces = 1, int occupants = 0);
 
-private:
+    virtual void demarrer();
 
+    virtual void arreter();
+
+    virtual ~Bateau();
 };
